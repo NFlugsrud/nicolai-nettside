@@ -24,7 +24,7 @@ const SITE = {
     },
     hero: {
       kicker: "Oslo, Norge",
-      lead: "Jeg jobber med økonomi og administrasjon i Stiftelsen Gi Effektivt, og fullfører en master i analytisk finans ved Handelshøyskolen ved Universitetet i Agder.",
+      lead: "Jeg jobber med økonomi og drift i Stiftelsen Gi Effektivt, og fullfører en master i analytisk finans ved Handelshøyskolen ved Universitetet i Agder.",
     },
     about: {
       title: "Om meg",
@@ -41,27 +41,44 @@ const SITE = {
           period: "Juni 2026 – nå",
           org: "Stiftelsen Gi Effektivt",
           place: "Oslo",
-          role: "Økonomi- og administrasjonsmedarbeider",
+          role: "Økonomi- og driftsmedarbeider",
           points: [
             "Løpende regnskap, lønnskjøring og rapportering.",
             "Gjennomføring av tildelinger av innsamlede midler til anbefalte organisasjoner.",
           ],
         },
         {
-          period: "Mars 2025 – juli 2026",
+          period: "August 2024 – nå",
+          org: "Drøbak Montessori Stiftelse",
+          place: "Drøbak",
+          role: "Regnskapsmedarbeider (deltid)",
+          points: ["Administrative og regnskapsrelaterte oppgaver etter behov."],
+        },
+        {
+          period: "August 2025 – juli 2026",
           org: "Aider AS",
           place: "Kristiansand",
           role: "Regnskapsrådgiver",
           points: [
-            "Løpende bokføring og bilagsoppfølging, automatisering av bilagsflyt, utarbeidelse av Excel-maler, analyse av CO₂-utslipp samt generell kundekontakt og bistand.",
+            "Løpende regnskapsføring, inngående og utgående fakturabehandling, bankavstemming og avstemming av MVA, reskontro og balanseposter, samt klargjøring, kontroll og innsending av MVA-meldinger.",
+            "Månedlig rapportering, økonomisk analyse og kundeoppfølging, i tillegg til automatisering av bilagsflyt, Excel-maler og analyse av CO₂-utslipp.",
           ],
         },
         {
-          period: "August 2024 – nå",
-          org: "Drøbak Montessori Skole",
-          place: "Drøbak",
-          role: "Økonomimedarbeider",
-          points: ["Administrative og regnskapsrelaterte oppgaver etter behov."],
+          period: "Mars 2025 – august 2025",
+          org: "Aider AS",
+          place: "Kristiansand",
+          role: "Trainee (deltid)",
+          points: [],
+        },
+        {
+          period: "Juni 2025 – august 2025",
+          org: "Economic Development Partnership (EDP)",
+          place: "Cape Town",
+          role: "Intern",
+          points: [
+            "Jobbet i Energy & Climate Programme med lokal rettferdig omstilling i Sør-Afrika. Bidro med research, datainnsamling og skriftlig analyse av hvordan kommuner kan gjøre klima- og energiambisjoner om til praktiske, lokalt forankrede tiltak.",
+          ],
         },
         {
           period: "August 2023 – desember 2024",
@@ -69,11 +86,13 @@ const SITE = {
           place: "Kristiansand",
           role: "Vitenskapelig assistent",
           points: [
-            "Flere stillinger som hjelpeassistent i Business Analytics, Microeconomics og Grunnleggende samfunnsøkonomi.",
+            "Samfunnsøkonomi (august 2023 – desember 2024): hjalp studenter med økonomisk teori, modellbasert resonnering og praktisk anvendelse.",
+            "Mikroøkonomi (juli – desember 2024): forklarte sentrale begreper gjennom eksempler og oppgaveløsning.",
+            "Business Analytics (juli – desember 2024): støttet studenter i å bruke analytiske metoder, tolke data og løse oppgaver med kvantitative verktøy.",
           ],
         },
         {
-          period: "Februar 2020 – juli 2021",
+          period: "Februar – juni 2020 og februar – juni 2021",
           org: "Drøbak Montessori Skole",
           place: "Drøbak",
           role: "Assistent",
@@ -121,6 +140,20 @@ const SITE = {
           points: [
             "Bacheloroppgave om optimering av brukstid for konsesjonskraft, i samarbeid med Å Entelios og Konsesjonskraft IKS.",
           ],
+        },
+        {
+          period: "Januar 2024 – april 2024",
+          org: "University of Ruhuna",
+          place: "Sri Lanka",
+          role: "Feltarbeid",
+          points: ["Feltopphold på Sri Lanka som del av bachelorgraden i global utvikling."],
+        },
+        {
+          period: "2023",
+          org: "Harvard Business School Online",
+          place: "Nettbasert",
+          role: "Sertifikat i Sustainable Business Strategy",
+          points: [],
         },
         {
           period: "August 2021 – mai 2024",
@@ -229,7 +262,7 @@ const SITE = {
     },
     hero: {
       kicker: "Oslo, Norway",
-      lead: "I work in finance and administration at Gi Effektivt, Norway's effective giving foundation, and I am completing an MSc in analytical finance at the University of Agder.",
+      lead: "I work in finance and operations at Gi Effektivt, Norway's effective giving foundation, and I am completing an MSc in analytical finance at the University of Agder.",
     },
     about: {
       title: "About",
@@ -246,27 +279,44 @@ const SITE = {
           period: "June 2026 – present",
           org: "Stiftelsen Gi Effektivt",
           place: "Oslo",
-          role: "Finance and Administration Officer",
+          role: "Finance and Operations Officer",
           points: [
             "Bookkeeping, payroll and reporting.",
             "Disbursing donated funds to recommended organisations.",
           ],
         },
         {
-          period: "March 2025 – July 2026",
+          period: "August 2024 – present",
+          org: "Drøbak Montessori Foundation",
+          place: "Drøbak",
+          role: "Accounting Assistant (part-time)",
+          points: ["Administrative and accounting tasks as needed."],
+        },
+        {
+          period: "August 2025 – July 2026",
           org: "Aider AS",
           place: "Kristiansand",
           role: "Accounting Advisor",
           points: [
-            "Bookkeeping and voucher follow-up, automation of voucher flows, Excel templates, CO₂ emissions analysis, and general client contact and support.",
+            "Bookkeeping, incoming and outgoing invoices, bank reconciliation and reconciliation of VAT, ledgers and balance sheet items, plus preparing, checking and filing VAT returns.",
+            "Monthly reporting, financial analysis and client follow-up, along with automation of voucher flows, Excel templates and CO₂ emissions analysis.",
           ],
         },
         {
-          period: "August 2024 – present",
-          org: "Drøbak Montessori School",
-          place: "Drøbak",
-          role: "Finance Assistant",
-          points: ["Administrative and accounting tasks as needed."],
+          period: "March 2025 – August 2025",
+          org: "Aider AS",
+          place: "Kristiansand",
+          role: "Trainee (part-time)",
+          points: [],
+        },
+        {
+          period: "June 2025 – August 2025",
+          org: "Economic Development Partnership (EDP)",
+          place: "Cape Town",
+          role: "Intern",
+          points: [
+            "Worked with the Energy & Climate Programme on the Local Just Transition in South Africa. Contributed to research, data capturing and written analysis on how municipalities can turn climate and energy transition ambitions into practical, locally grounded action.",
+          ],
         },
         {
           period: "August 2023 – December 2024",
@@ -274,11 +324,13 @@ const SITE = {
           place: "Kristiansand",
           role: "Teaching Assistant",
           points: [
-            "Several positions as teaching assistant in Business Analytics, Microeconomics and Introductory Economics.",
+            "Economics (August 2023 – December 2024): assisted students with economic theory, model-based reasoning and practical applications.",
+            "Microeconomics (July – December 2024): explained key concepts through examples and problem-solving support.",
+            "Business Analytics (July – December 2024): supported students in applying analytical methods, interpreting data and using quantitative tools.",
           ],
         },
         {
-          period: "February 2020 – July 2021",
+          period: "February – June 2020 and February – June 2021",
           org: "Drøbak Montessori School",
           place: "Drøbak",
           role: "Assistant",
@@ -326,6 +378,20 @@ const SITE = {
           points: [
             "Bachelor's thesis on optimising utilisation hours for concession power, in collaboration with Å Entelios and Konsesjonskraft IKS.",
           ],
+        },
+        {
+          period: "January 2024 – April 2024",
+          org: "University of Ruhuna",
+          place: "Sri Lanka",
+          role: "Fieldwork",
+          points: ["Fieldwork stay in Sri Lanka as part of my bachelor's degree in Global Development."],
+        },
+        {
+          period: "2023",
+          org: "Harvard Business School Online",
+          place: "Online",
+          role: "Certificate in Sustainable Business Strategy",
+          points: [],
         },
         {
           period: "August 2021 – May 2024",

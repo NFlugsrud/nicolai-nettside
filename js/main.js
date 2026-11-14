@@ -18,6 +18,44 @@
     </section>`;
   }
 
+  // Flere stillinger hos samme arbeidsgiver (oppføringer rett etter hverandre
+  // med lik "org") vises samlet, med en strek mellom stillingene.
+  function grouped(items) {
+    const groups = [];
+    items.forEach((i) => {
+      const last = groups[groups.length - 1];
+      if (last && last[0].org === i.org) last.push(i);
+      else groups.push([i]);
+    });
+    return `<ol class="timeline">${groups
+      .map((g) => {
+        if (g.length === 1) return entry(g[0]);
+        const start = g[g.length - 1].period.split(" – ")[0];
+        const end = g[0].period.split(" – ").pop();
+        return `<li class="entry">
+          <p class="entry-period">${esc(start)} – ${esc(end)}</p>
+          <div>
+            <h3 class="entry-role">${esc(g[0].org)}</h3>
+            <p class="entry-org">${esc(g[0].place)}</p>
+            <ol class="roles">${g
+              .map(
+                (i) => `<li>
+                  <h4 class="role-title">${esc(i.role)}</h4>
+                  <p class="role-period">${esc(i.period)}</p>
+                  ${i.points.map((p) => `<p class="entry-text">${esc(p)}</p>`).join("")}
+                </li>`
+              )
+              .join("")}</ol>
+          </div>
+        </li>`;
+      })
+      .join("")}</ol>`;
+  }
+
+  function entry(i) {
+    return timeline([i]).replace(/^<ol class="timeline">|<\/ol>$/g, "");
+  }
+
   function timeline(items) {
     return `<ol class="timeline">${items
       .map(
@@ -65,7 +103,7 @@
       )
       .join("")}</div>`;
 
-    const experience = section("erfaring", t.experience.title, timeline(t.experience.items) + skills);
+    const experience = section("erfaring", t.experience.title, grouped(t.experience.items) + skills);
     const education = section("utdanning", t.education.title, timeline(t.education.items));
 
     const thesis = section(

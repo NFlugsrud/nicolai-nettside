@@ -81,15 +81,25 @@ const SITE = {
           ],
         },
         {
+          period: "Juli 2024 – desember 2024",
+          org: "Handelshøyskolen ved Universitetet i Agder",
+          place: "Kristiansand",
+          role: "Vitenskapelig assistent i mikroøkonomi",
+          points: ["Forklarte sentrale begreper gjennom eksempler og oppgaveløsning."],
+        },
+        {
+          period: "Juli 2024 – desember 2024",
+          org: "Handelshøyskolen ved Universitetet i Agder",
+          place: "Kristiansand",
+          role: "Vitenskapelig assistent i Business Analytics",
+          points: ["Støttet studenter i å bruke analytiske metoder, tolke data og løse oppgaver med kvantitative verktøy."],
+        },
+        {
           period: "August 2023 – desember 2024",
           org: "Handelshøyskolen ved Universitetet i Agder",
           place: "Kristiansand",
-          role: "Vitenskapelig assistent",
-          points: [
-            "Samfunnsøkonomi (august 2023 – desember 2024): hjalp studenter med økonomisk teori, modellbasert resonnering og praktisk anvendelse.",
-            "Mikroøkonomi (juli – desember 2024): forklarte sentrale begreper gjennom eksempler og oppgaveløsning.",
-            "Business Analytics (juli – desember 2024): støttet studenter i å bruke analytiske metoder, tolke data og løse oppgaver med kvantitative verktøy.",
-          ],
+          role: "Vitenskapelig assistent i samfunnsøkonomi",
+          points: ["Hjalp studenter med økonomisk teori, modellbasert resonnering og praktisk anvendelse."],
         },
         {
           period: "Februar – juni 2020 og februar – juni 2021",
@@ -319,15 +329,25 @@ const SITE = {
           ],
         },
         {
+          period: "July 2024 – December 2024",
+          org: "School of Business and Law, University of Agder",
+          place: "Kristiansand",
+          role: "Teaching Assistant in Microeconomics",
+          points: ["Explained key concepts through examples and problem-solving support."],
+        },
+        {
+          period: "July 2024 – December 2024",
+          org: "School of Business and Law, University of Agder",
+          place: "Kristiansand",
+          role: "Teaching Assistant in Business Analytics",
+          points: ["Supported students in applying analytical methods, interpreting data and using quantitative tools."],
+        },
+        {
           period: "August 2023 – December 2024",
           org: "School of Business and Law, University of Agder",
           place: "Kristiansand",
-          role: "Teaching Assistant",
-          points: [
-            "Economics (August 2023 – December 2024): assisted students with economic theory, model-based reasoning and practical applications.",
-            "Microeconomics (July – December 2024): explained key concepts through examples and problem-solving support.",
-            "Business Analytics (July – December 2024): supported students in applying analytical methods, interpreting data and using quantitative tools.",
-          ],
+          role: "Teaching Assistant in Economics",
+          points: ["Assisted students with economic theory, model-based reasoning and practical applications."],
         },
         {
           period: "February – June 2020 and February – June 2021",

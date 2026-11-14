@@ -126,6 +126,22 @@ h1 {
 .entry-text { font-size: 16px; color: var(--muted); max-width: 40em; }
 .entry-text + .entry-text { margin-top: 4px; }
 
+/* Flere stillinger hos samme arbeidsgiver */
+.roles { margin-top: 16px; }
+.roles li { position: relative; padding: 0 0 22px 26px; }
+.roles li:last-child { padding-bottom: 0; }
+.roles li::before {
+  content: ""; position: absolute; left: 0; top: 9px;
+  width: 9px; height: 9px; border-radius: 50%; background: var(--muted);
+}
+.roles li::after {
+  content: ""; position: absolute; left: 4px; top: 26px; bottom: -3px;
+  width: 1px; background: var(--line);
+}
+.roles li:last-child::after { display: none; }
+.role-title { font-family: var(--serif); font-weight: 400; font-size: 19px; line-height: 1.35; margin: 0; }
+.role-period { font-size: 14px; color: var(--muted); margin: 0 0 6px; font-variant-numeric: tabular-nums; }
+
 .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li { font-size: 14px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }

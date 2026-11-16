@@ -13,7 +13,9 @@ Dobbeltklikk på `start.command`. Siden åpnes på http://localhost:8001. Stopp 
 | `/` | Forside med utforsk-kort |
 | `/om/` | Om meg, interesser og giverkalkulator |
 | `/erfaring/` | Arbeid og utdanning med filter, PDF og utskrift |
+| `/oppgaver/` | Oversikt over oppgavene |
 | `/master/` | Masteroppgaven med kart, sikringskalkulator og korrelasjonsgraf |
+| `/oppgaver/okonomi/` | Bacheloroppgaven i økonomi: 4/3-regelen, døgnprofil, spill, varmekart, 2025-test og helligdager |
 | `/na/` | Nå-side |
 | `/bokhylle/` | Bøker og forfattere |
 | `/blogg/` | Blogg (vises i menyen når det finnes et publisert innlegg) |
@@ -26,6 +28,7 @@ All tekst ligger i `js/data.js`, én gang på norsk (`no`) og én gang på engel
 - **Nå-siden:** oppdater `nowPage.items` og `nowPage.updatedDate`.
 - **Bokhylle:** legg til bøker i `books` øverst i filen.
 - **Giverkalkulator:** tallene ligger i `give` øverst i filen, med kilder.
+- **Bacheloroppgaven i økonomi:** tallene fra oppgaven ligger i `econ` øverst i filen, tekstene i `econPage`.
 - **Profilbilde:** `bilder/profil.jpg`.
 - **LinkedIn:** lim inn lenken i feltet `linkedin` øverst i `js/data.js`.
 

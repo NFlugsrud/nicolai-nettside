@@ -59,7 +59,7 @@
   const NAV = [
     ["om", "/om/"],
     ["erfaring", "/erfaring/"],
-    ["master", "/master/"],
+    ["oppgaver", "/oppgaver/"],
     ["na", "/na/"],
     ["bokhylle", "/bokhylle/"],
     ["blogg", "/blogg/"],
@@ -114,6 +114,7 @@
           <h3 class="entry-role">${esc(i.role)}</h3>
           <p class="entry-org">${esc(i.org)} <span class="sep">·</span> ${esc(i.place)}</p>
           ${points(i)}
+          ${i.link ? `<a class="text-link entry-link" href="${esc(i.link)}">${esc(t.thesesPage.linkLabel)} ${icon("right", "icon icon-sm")}</a>` : ""}
         </div>
       </li>`;
     }
@@ -234,11 +235,15 @@
 
   // ---------- Topp og bunn ----------
 
+  // Undersider som hører til et menypunkt.
+  const NAV_PARENT = { master: "oppgaver", okonomi: "oppgaver", globalutvikling: "oppgaver" };
+
   function header(t, page) {
+    const active = NAV_PARENT[page] || page;
     const links = navItems()
       .map(
         ([id, href]) =>
-          `<a href="${href}"${id === page ? ' class="active" aria-current="page"' : ""}>${esc(t.nav[id])}</a>`
+          `<a href="${href}"${id === active ? ' class="active" aria-current="page"' : ""}>${esc(t.nav[id])}</a>`
       )
       .join("");
     return `<a class="skip" href="#app">${esc(t.ui.skip)}</a>

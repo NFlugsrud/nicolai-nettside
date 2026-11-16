@@ -320,7 +320,7 @@
         m.kicker,
         t.thesis.heading,
         t.thesis.paragraphs[0],
-        `<div class="page-actions">${S.countdown(t)}</div>`
+        `<div class="page-actions"><a class="text-link back-link" href="/oppgaver/">${icon("left", "icon icon-sm")} ${esc(t.thesesPage.back)}</a>${S.countdown(t)}</div>`
       )}
 
       ${S.block(
@@ -475,6 +475,422 @@
         const corr = app.querySelector("#corr");
         corr.addEventListener("input", () => draw(Number(corr.value)));
         draw(Number(corr.value));
+      },
+    };
+  };
+
+  // ================= Oppgaver (oversikt) =================
+  P.oppgaver = (t, S) => {
+    const { esc, icon } = S;
+    const o = t.thesesPage;
+    const visuals = {
+      master: `<div class="mini-map" aria-hidden="true">${SITE.zones
+        .map(
+          (z) =>
+            `<span class="mz zc-${z.country}${SITE.focusZones.includes(z.id) ? " is-focus" : ""}" style="grid-column:${z.col};grid-row:${z.row}${
+              z.rowSpan ? " / span " + z.rowSpan : ""
+            }">${esc(z.id)}</span>`
+        )
+        .join("")}</div>`,
+      okonomi: `<div class="mini-bars" aria-hidden="true">${SITE.econ.profile.weekday
+        .map((v) => {
+          const med = median(SITE.econ.profile.weekday);
+          return `<span class="${v > med ? "hi" : "lo"}" style="height:${Math.round(((v - 40) / 32) * 100)}%"></span>`;
+        })
+        .join("")}</div>`,
+    };
+    return {
+      title: o.kicker,
+      html: `
+      ${S.pageHead(o.kicker, o.title, o.lead)}
+      <div class="thesis-list">${o.items
+        .map(
+          (it) => `<a class="thesis-card reveal" href="${it.href}">
+            <div class="thesis-text">
+              <p class="small-label">${esc(it.label)}</p>
+              <h2>${esc(it.title)}</h2>
+              <p>${esc(it.text)}</p>
+              <span class="text-link">${esc(o.read)} ${icon("right", "icon icon-sm")}</span>
+            </div>
+            <div class="thesis-visual">${visuals[it.id] || ""}</div>
+          </a>`
+        )
+        .join("")}</div>
+      ${S.contactBand(t)}`,
+    };
+  };
+
+  function median(arr) {
+    const s = arr.slice().sort((a, b) => a - b);
+    const m = Math.floor(s.length / 2);
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  }
+
+  // ================= Bacheloroppgave i økonomi =================
+  P.okonomi = (t, S) => {
+    const { esc, icon, lang } = S;
+    const e = t.econPage;
+    const D = SITE.econ;
+    const years = Object.keys(D.treff);
+    const pct = (v, d = 1) => `${S.fmt(v, d)} %`;
+
+    const hours = Array.from({ length: 24 }, (_, h) => h);
+    const hourLabel = (h) => String(h).padStart(2, "0");
+
+    const heat = `
+      <div class="heat-wrap reveal">
+        <div class="seg" role="group" aria-label="${esc(e.heatTitle)}">
+          ${Object.entries(e.metrics)
+            .map(([k, label], n) => `<button type="button" data-metric="${k}" aria-pressed="${n === 0}">${esc(label)}</button>`)
+            .join("")}
+        </div>
+        <div class="heat-scroll">
+          <table class="heat" id="heat">
+            <thead><tr><th></th>${e.months.map((m) => `<th scope="col">${esc(m)}</th>`).join("")}<th scope="col" class="heat-avg">${esc(e.avg)}</th></tr></thead>
+            <tbody>${years
+              .map(
+                (y) => `<tr><th scope="row">${y}</th>${e.months
+                  .map((_, m) => `<td><button type="button" class="cell" data-y="${y}" data-m="${m}"></button></td>`)
+                  .join("")}<td class="heat-avg" data-yavg="${y}"></td></tr>`
+              )
+              .join("")}</tbody>
+            <tfoot><tr><th scope="row">${esc(e.avg)}</th>${e.months.map((_, m) => `<td class="heat-avg" data-mavg="${m}"></td>`).join("")}<td class="heat-avg" id="heat-total"></td></tr></tfoot>
+          </table>
+        </div>
+        <p class="heat-detail" id="heat-detail" aria-live="polite"></p>
+        <p class="fine muted">${esc(e.heatNote)}</p>
+      </div>`;
+
+    const maxHol = Math.max(...D.holidays.map((h) => Math.abs(h.eur)));
+    const holidays = `<ul class="hbars reveal">${D.holidays
+      .map(
+        (h) => `<li>
+          <span class="hb-label">${esc(h[lang])}</span>
+          <span class="hb-track"><span class="hb-fill" style="width:${((Math.abs(h.eur) / maxHol) * 100).toFixed(1)}%"></span></span>
+          <span class="hb-value">−${S.fmt(Math.abs(h.eur), 2)} €<small> (${h.pct} %)</small></span>
+        </li>`
+      )
+      .join("")}</ul>
+      <p class="fine muted reveal">${esc(e.holidayUnit)}</p>`;
+
+    const maxBlock = Math.max(...D.blocks);
+    const blocks = `<div class="vbars reveal" aria-label="${esc(e.blocksTitle)}">${D.blocks
+      .map(
+        (b, m) => `<div class="vbar"><span class="vbar-val">${b} %</span><span class="vbar-fill" style="height:${(b / maxBlock) * 100}%"></span><span class="vbar-label">${esc(
+          e.months[m]
+        )}</span></div>`
+      )
+      .join("")}</div>`;
+
+    return {
+      title: lang === "no" ? "Bacheloroppgave i økonomi" : "Bachelor's thesis in business",
+      html: `
+      ${S.pageHead(
+        e.kicker,
+        e.title,
+        e.lead,
+        `<div class="page-actions"><a class="text-link back-link" href="/oppgaver/">${icon("left", "icon icon-sm")} ${esc(t.thesesPage.back)}</a></div>
+         <dl class="facts facts-head">${e.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>`
+      )}
+
+      ${S.block(
+        e.questionsTitle,
+        "",
+        `<ol class="questions">${e.questions.map((q, n) => `<li class="reveal"><span>${n + 1}</span><p>${esc(q)}</p></li>`).join("")}</ol>
+         <p class="fine muted reveal">${esc(e.fullTitle)}</p>`
+      )}
+
+      ${S.block(
+        e.keyTitle,
+        "",
+        `<div class="stat-grid">${e.key.map(([n, txt]) => `<div class="stat reveal"><strong>${esc(n)}</strong><span>${esc(txt)}</span></div>`).join("")}</div>`
+      )}
+
+      ${S.block(
+        e.ruleTitle,
+        e.ruleText,
+        `<div class="rule reveal">
+          <div class="rule-left">
+            <div class="slider">
+              <label for="mw"><span>${esc(e.mwLabel)}</span><output id="mw-out">6 MW</output></label>
+              <input type="range" id="mw" min="1" max="30" step="1" value="6">
+            </div>
+            <div class="rule-cards">
+              <div class="rule-card is-high"><span class="small-label">${esc(e.high)}</span><strong id="mw-high">8 MW</strong></div>
+              <div class="rule-card is-low"><span class="small-label">${esc(e.low)}</span><strong id="mw-low">4 MW</strong></div>
+            </div>
+          </div>
+          <div class="rule-right">
+            <p class="small-label">${esc(e.blocksTitle)}</p>
+            ${blocks}
+            <p class="fine muted">${esc(e.blocksNote)}</p>
+          </div>
+        </div>`,
+        "regel"
+      )}
+
+      ${S.block(
+        e.profileTitle,
+        e.profileText,
+        `<div class="profile reveal">
+          <div class="seg" role="group">
+            ${Object.entries(e.dayTypes)
+              .map(([k, label], n) => `<button type="button" data-day="${k}" aria-pressed="${n === 0}">${esc(label)}</button>`)
+              .join("")}
+          </div>
+          <div class="pchart" id="pchart">
+            <div class="pbars" id="pbars">${hours.map((h) => `<span class="pbar" data-h="${h}"><i></i></span>`).join("")}</div>
+            <div class="pmedian" id="pmedian"><span>${esc(e.median)}</span></div>
+          </div>
+          <div class="paxis">${hours.map((h) => `<span>${h % 3 === 0 ? hourLabel(h) : ""}</span>`).join("")}</div>
+          <p class="legend"><span class="key key-hi"></span>${esc(e.high)}<span class="key key-lo"></span>${esc(e.low)}</p>
+          <p class="fine muted">${esc(e.profileNote)}</p>
+        </div>`,
+        "strategi"
+      )}
+
+      ${S.block(
+        e.gameTitle,
+        e.gameText,
+        `<div class="game reveal" id="game">
+          <div class="game-top">
+            <span class="pill" id="g-count"></span>
+            <span class="pill" id="g-score"></span>
+          </div>
+          <div class="gchart">
+            <div class="gbars" id="gbars">${hours
+              .map((h) => `<button type="button" class="gbar" data-h="${h}" aria-pressed="false" aria-label="${hourLabel(h)}:00"><i class="g-base"></i><b class="g-yday"></b><b class="g-today"></b></button>`)
+              .join("")}</div>
+          </div>
+          <div class="paxis">${hours.map((h) => `<span>${h % 3 === 0 ? hourLabel(h) : ""}</span>`).join("")}</div>
+          <p class="legend"><span class="key key-base"></span>${lang === "no" ? "Historisk snitt" : "Historical average"}<span class="key key-yday"></span>${
+            lang === "no" ? "I går" : "Yesterday"
+          }<span class="key key-today"></span>${lang === "no" ? "Faktisk pris i dag" : "Actual price today"}</p>
+          <div class="game-actions">
+            <button type="button" class="btn btn-primary" id="g-check" disabled>${esc(e.check)}</button>
+            <button type="button" class="btn" id="g-reset">${esc(e.reset)}</button>
+            <button type="button" class="btn" id="g-new">${esc(e.newDay)}</button>
+          </div>
+          <div class="game-result" id="g-result" aria-live="polite"></div>
+          <p class="fine muted">${esc(e.gameNote)}</p>
+        </div>`,
+        "spill"
+      )}
+
+      ${S.block(e.heatTitle, e.heatText, heat, "resultater")}
+
+      ${S.block(
+        e.oosTitle,
+        e.oosText,
+        `<div class="oos">${D.oos
+          .map(
+            (o) => `<div class="oos-card reveal">
+              <p class="small-label">${esc(e.months[o.m])} 2025</p>
+              <dl>
+                <div><dt>${esc(e.metrics.treff)}</dt><dd>${pct(o.treff)}</dd></div>
+                <div><dt>${esc(e.metrics.merverdi)}</dt><dd>${pct(o.merverdi)}</dd></div>
+                <div><dt>${esc(e.eurLabel)}</dt><dd>${S.fmt(o.eur, 2)} €/MWh</dd></div>
+                <div><dt>${esc(e.sd)}</dt><dd>${S.fmt(o.sd, 2)}</dd></div>
+              </dl>
+            </div>`
+          )
+          .join("")}</div>`
+      )}
+
+      ${S.block(e.holidayTitle, e.holidayText, holidays)}
+
+      ${S.block(
+        e.conclusionTitle,
+        "",
+        `<div class="panel reveal">${e.conclusion.map((p) => `<p class="prose">${esc(p)}</p>`).join("")}</div>
+         <a class="text-link reveal" href="/oppgaver/">${icon("left", "icon icon-sm")} ${esc(t.thesesPage.back)}</a>`
+      )}
+
+      ${S.contactBand(t)}`,
+
+      mount(app) {
+        // --- 4/3 og 2/3 ---
+        const mw = app.querySelector("#mw");
+        const mwUpdate = () => {
+          const v = Number(mw.value);
+          app.querySelector("#mw-out").textContent = `${v} MW`;
+          app.querySelector("#mw-high").textContent = `${S.fmt((v * 4) / 3, 1)} MW`;
+          app.querySelector("#mw-low").textContent = `${S.fmt((v * 2) / 3, 1)} MW`;
+        };
+        mw.addEventListener("input", mwUpdate);
+        mwUpdate();
+
+        // --- Døgnprofil ---
+        const LO = 40, HI = 72;
+        const y = (v) => Math.max(0, Math.min(100, ((v - LO) / (HI - LO)) * 100));
+        const drawProfile = (day) => {
+          const data = D.profile[day];
+          const med = median(data);
+          app.querySelectorAll("#pbars .pbar").forEach((el, h) => {
+            el.classList.toggle("hi", data[h] > med);
+            el.querySelector("i").style.height = `${y(data[h])}%`;
+            el.title = `${hourLabel(h)}:00 · ${S.fmt(data[h], 1)} €/MWh`;
+          });
+          app.querySelector("#pmedian").style.bottom = `${y(med)}%`;
+          app.querySelector("#pmedian span").textContent = `${e.median} ${S.fmt(med, 1)} €`;
+        };
+        app.querySelectorAll("[data-day]").forEach((b) =>
+          b.addEventListener("click", () => {
+            app.querySelectorAll("[data-day]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+            drawProfile(b.dataset.day);
+          })
+        );
+        drawProfile("weekday");
+
+        // --- Spill: slå strategien ---
+        let seed = 7;
+        const rand = () => {
+          seed = (seed * 1664525 + 1013904223) % 4294967296;
+          return seed / 4294967296;
+        };
+        const normal = () => Math.sqrt(-2 * Math.log(1 - rand())) * Math.cos(2 * Math.PI * rand());
+        const base = D.profile.weekday;
+        const baseMed = median(base);
+        const stratPick = base.map((v) => v > baseMed);
+        let day, picks, checked, wins = 0, losses = 0;
+
+        const newDay = () => {
+          const lvlY = 0.75 + rand() * 0.6;
+          const lvlT = lvlY * (0.9 + rand() * 0.2);
+          // Felles svingning (c) gjør at i går sier noe om i dag, men ikke alt.
+          let c = 0, iy = 0, it = 0;
+          const yday = [], today = [];
+          base.forEach((b) => {
+            c = 0.7 * c + normal() * 5;
+            iy = 0.6 * iy + normal() * 4.5;
+            it = 0.6 * it + normal() * 4.5;
+            yday.push(Math.max(5, b * lvlY + c + iy));
+            today.push(Math.max(5, b * lvlT + c + it));
+          });
+          day = { yday, today };
+          picks = new Array(24).fill(false);
+          checked = false;
+          drawGame();
+        };
+
+        const value = (choice, prices) => prices.reduce((s, p, h) => s + p * (choice[h] ? 4 / 3 : 2 / 3), 0) / 24;
+        const evaluate = (choice) => {
+          const p = day.today;
+          const med = median(p);
+          const perfect = p.map((v) => v > med);
+          const flat = p.reduce((s, v) => s + v, 0) / 24;
+          const best = value(perfect, p) - flat;
+          return {
+            treff: (choice.filter((c, h) => c === perfect[h]).length / 24) * 100,
+            merverdi: best > 0 ? ((value(choice, p) - flat) / best) * 100 : 0,
+            perfect,
+          };
+        };
+
+        const drawGame = () => {
+          const all = base.concat(day.yday, checked ? day.today : []);
+          const lo = Math.min(...all) - 6, hi = Math.max(...all) + 4;
+          const gy = (v) => ((v - lo) / (hi - lo)) * 100;
+          const res = checked ? evaluate(picks) : null;
+          app.querySelectorAll("#gbars .gbar").forEach((el, h) => {
+            el.setAttribute("aria-pressed", String(picks[h]));
+            el.querySelector(".g-base").style.height = `${gy(base[h])}%`;
+            el.querySelector(".g-yday").style.bottom = `${gy(day.yday[h])}%`;
+            const td = el.querySelector(".g-today");
+            td.style.display = checked ? "block" : "none";
+            if (checked) td.style.bottom = `${gy(day.today[h])}%`;
+            el.classList.toggle("is-right", !!res && picks[h] === res.perfect[h]);
+            el.classList.toggle("is-wrong", !!res && picks[h] !== res.perfect[h]);
+            el.disabled = checked;
+          });
+          const n = picks.filter(Boolean).length;
+          app.querySelector("#g-count").textContent = e.picked(n);
+          app.querySelector("#g-score").textContent = e.score(wins, losses);
+          app.querySelector("#g-check").disabled = n !== 12 || checked;
+          if (!checked) app.querySelector("#g-result").innerHTML = "";
+        };
+
+        app.querySelectorAll("#gbars .gbar").forEach((el) =>
+          el.addEventListener("click", () => {
+            const h = Number(el.dataset.h);
+            if (checked) return;
+            if (!picks[h] && picks.filter(Boolean).length >= 12) return;
+            picks[h] = !picks[h];
+            drawGame();
+          })
+        );
+        app.querySelector("#g-reset").addEventListener("click", () => {
+          if (checked) return;
+          picks = new Array(24).fill(false);
+          drawGame();
+        });
+        app.querySelector("#g-new").addEventListener("click", newDay);
+        app.querySelector("#g-check").addEventListener("click", () => {
+          checked = true;
+          const me = evaluate(picks), st = evaluate(stratPick);
+          const diff = me.merverdi - st.merverdi;
+          const verdict = Math.abs(diff) < 0.5 ? e.tie : diff > 0 ? e.win : e.lose;
+          if (Math.abs(diff) >= 0.5) diff > 0 ? wins++ : losses++;
+          drawGame();
+          app.querySelector("#g-result").innerHTML = `
+            <p class="verdict">${esc(verdict)}</p>
+            <table class="score-table">
+              <thead><tr><th></th><th>${esc(e.hit)}</th><th>${esc(e.value)}</th></tr></thead>
+              <tbody>
+                <tr><th>${esc(e.you)}</th><td>${pct(me.treff, 0)}</td><td>${pct(me.merverdi, 0)}</td></tr>
+                <tr><th>${esc(e.strategy)}</th><td>${pct(st.treff, 0)}</td><td>${pct(st.merverdi, 0)}</td></tr>
+              </tbody>
+            </table>`;
+        });
+        newDay();
+
+        // --- Varmekart ---
+        const ranges = { treff: [40, 85], merverdi: [0, 85], eur: [0, 17.5] };
+        const fmtM = (k, v) => (k === "eur" ? `${S.fmt(v, 2)} €` : `${S.fmt(v, 1)} %`);
+        const shade = (k, v) => {
+          if (v < 0 || (k === "treff" && v < 50)) return "neg";
+          const [a, b] = ranges[k];
+          let x = Math.max(0, Math.min(1, (v - a) / (b - a)));
+          if (k === "eur") x = Math.sqrt(x);
+          return Math.round(8 + x * 82);
+        };
+        const avgOf = (arr) => arr.reduce((s, v) => s + v, 0) / arr.length;
+        let metric = "treff";
+        const detail = app.querySelector("#heat-detail");
+        const showDetail = (yy, m) =>
+          (detail.innerHTML = `<strong>${esc(e.months[m])} ${yy}</strong> · ${esc(e.metrics.treff)} ${pct(D.treff[yy][m])} · ${esc(
+            e.metrics.merverdi
+          )} ${pct(D.merverdi[yy][m])} · ${S.fmt(D.eur[yy][m], 2)} €/MWh`);
+        const drawHeat = () => {
+          const data = D[metric];
+          app.querySelectorAll("#heat .cell").forEach((c) => {
+            const v = data[c.dataset.y][c.dataset.m];
+            const s = shade(metric, v);
+            c.textContent = metric === "eur" ? S.fmt(v, 1) : S.fmt(v, 0);
+            c.classList.toggle("is-neg", s === "neg");
+            c.classList.toggle("is-dark", s !== "neg" && s > 55);
+            c.style.setProperty("--x", s === "neg" ? "0%" : `${s}%`);
+            c.setAttribute("aria-label", `${e.months[c.dataset.m]} ${c.dataset.y}: ${fmtM(metric, v)}`);
+          });
+          years.forEach((yy) => (app.querySelector(`[data-yavg="${yy}"]`).textContent = fmtM(metric, avgOf(data[yy]))));
+          e.months.forEach((_, m) => (app.querySelector(`[data-mavg="${m}"]`).textContent = fmtM(metric, avgOf(years.map((yy) => data[yy][m])))));
+          app.querySelector("#heat-total").textContent = fmtM(metric, avgOf(years.flatMap((yy) => data[yy])));
+        };
+        app.querySelectorAll("[data-metric]").forEach((b) =>
+          b.addEventListener("click", () => {
+            metric = b.dataset.metric;
+            app.querySelectorAll("[data-metric]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+            drawHeat();
+          })
+        );
+        app.querySelectorAll("#heat .cell").forEach((c) => {
+          const show = () => showDetail(c.dataset.y, Number(c.dataset.m));
+          c.addEventListener("mouseenter", show);
+          c.addEventListener("focus", show);
+          c.addEventListener("click", show);
+        });
+        drawHeat();
+        showDetail("2022", 11);
       },
     };
   };

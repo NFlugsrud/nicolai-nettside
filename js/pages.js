@@ -911,45 +911,55 @@
           <button type="button" data-state="before" aria-pressed="true">${esc(g.before)}</button>
           <button type="button" data-state="after" aria-pressed="false">${esc(g.after)}</button>
         </div>
-        <svg viewBox="0 118 640 262" id="hmap" data-state="before" role="img" aria-label="${esc(g.mapTitle)}">
-          <rect class="land" x="0" y="100" width="640" height="280"/>
-          <path class="sea" d="M0 305 C 140 295 260 312 380 300 C 480 292 560 296 640 288 L640 380 L0 380 Z"/>
-          <ellipse class="sea m-before" cx="272" cy="302" rx="34" ry="12"/>
-          <path class="sea m-after" d="M196 212 h152 a14 14 0 0 1 14 14 v34 a14 14 0 0 1 -14 14 h-52 v34 h-52 v-34 h-48 a14 14 0 0 1 -14 -14 v-34 a14 14 0 0 1 14 -14 z"/>
-          <text class="lbl lbl-sea" x="330" y="352" text-anchor="middle">${esc(mp.sea)}</text>
-          <text class="lbl m-after" x="272" y="246" text-anchor="middle">${esc(mp.inner)}</text>
-          <text class="lbl m-before" x="272" y="330" text-anchor="middle">${esc(mp.harbour)}</text>
+        <div class="hmap-scroll">
+        <svg viewBox="0 40 1056 640" id="hmap" data-state="before" role="img" aria-label="${esc(g.mapTitle)}">
+          <rect class="land" x="0" y="0" width="1056" height="698"/>
+          <g class="pans" aria-hidden="true">${[0, 1, 2, 3, 4, 5].map((n) => `<rect x="${648 + (n % 3) * 46}" y="${262 + Math.floor(n / 3) * 62}" width="40" height="54" rx="6"/>`).join("")}</g>
+          <path class="sea" d="M0 662 L90 642 L200 626 L300 607 L352 596 L440 586 L520 566 L600 554 L676 548 L700 522 L760 468 L830 392 L900 344 L1000 312 L1056 300 L1056 698 L0 698 Z"/>
+          <path class="lagoon" d="M372 392 C420 378 500 386 560 398 C600 408 612 440 590 462 C560 486 500 480 455 474 C420 468 380 448 368 428 C362 412 362 398 372 392 Z"/>
+          <text class="lbl lbl-sea" x="830" y="626" text-anchor="middle">${esc(mp.sea)}</text>
 
-          <circle class="town" cx="440" cy="262" r="34"/>
-          <text class="lbl lbl-strong" x="440" y="222" text-anchor="middle">${esc(mp.town)}</text>
+          <g class="m-after">
+            <path class="sea" d="M290 404 L436 404 L446 470 L446 590 L432 592 L360 604 L352 596 L352 500 L290 500 Z"/>
+            <path class="terminal" d="M196 378 L290 378 L290 524 L196 524 Z"/>
+            <g class="quays">${[424, 452, 480].map((y) => `<rect x="288" y="${y}" width="58" height="12" rx="3"/>`).join("")}</g>
+            <path class="pier" d="M446 590 L476 584"/>
+            <text class="lbl lbl-strong" x="400" y="586" text-anchor="middle">${esc(mp.harbour)}</text>
+          </g>
+
+          <path class="town" d="M448 522 C500 512 560 506 620 502 C650 500 676 504 692 520 L676 548 L600 554 L520 566 L448 584 Z"/>
+          <ellipse class="siri" cx="650" cy="138" rx="104" ry="46"/>
+          <text class="lbl lbl-strong" x="650" y="144" text-anchor="middle">${esc(mp.siri)}</text>
 
           <g class="m-before">
-            <path class="road" d="M0 284 C 120 280 200 286 240 285 L 310 285 C 370 284 420 278 640 270"/>
-            <g class="houses">${[230, 246, 262, 282, 298, 314].map((x, n) => `<rect x="${x}" y="${n % 2 ? 262 : 268}" width="9" height="9" rx="2"/>`).join("")}</g>
-            <g class="shops">${[412, 428, 444, 460].map((x) => `<rect x="${x}" y="268" width="10" height="10" rx="2"/>`).join("")}</g>
-            <text class="lbl" x="130" y="304" text-anchor="middle">${esc(mp.oldRoad)}</text>
+            <path class="road" d="M70 590 C150 572 250 552 340 540 C400 532 450 526 500 527 C540 528 580 510 620 470 C660 420 690 330 715 255 C760 230 820 226 850 222 C920 180 980 130 1056 92"/>
+            <g class="houses">${[[262, 516], [296, 500], [330, 528], [362, 508], [396, 540], [424, 500], [300, 552], [240, 548]].map(([x, y]) => `<rect x="${x}" y="${y}" width="15" height="15" rx="3"/>`).join("")}</g>
+            <g class="shops">${[476, 500, 524, 548].map((x, n) => `<rect x="${x}" y="${n % 2 ? 504 : 498}" width="16" height="16" rx="3"/>`).join("")}</g>
+            <text class="lbl" x="196" y="536" text-anchor="middle">${esc(mp.oldRoad)}</text>
           </g>
 
           <g class="m-after">
-            <path class="road" d="M0 284 C 120 280 180 286 226 285"/>
-            <path class="road" d="M318 285 C 370 284 420 278 640 270"/>
-            <path class="road road-new" d="M0 284 C 70 276 110 178 220 166 S 520 132 566 196 S 620 262 640 270"/>
-            <g class="cut"><path d="M262 278 l20 14 M282 278 l-20 14"/></g>
-            <text class="lbl lbl-alert" x="200" y="322" text-anchor="end">${esc(mp.cut)}</text>
-            <text class="lbl lbl-strong" x="300" y="140" text-anchor="middle">${esc(mp.newRoad)}</text>
-            <g class="shops shops-faded">${[412, 428, 444, 460].map((x) => `<rect x="${x}" y="268" width="10" height="10" rx="2"/>`).join("")}</g>
-            <text class="lbl lbl-alert" x="440" y="322" text-anchor="middle">${esc(mp.shops)}</text>
-            <ellipse class="siri" cx="512" cy="200" rx="40" ry="20"/>
-            <text class="lbl lbl-strong" x="512" y="204" text-anchor="middle">${esc(mp.siri)}</text>
-            <path class="move" d="M330 210 C 380 176 424 180 468 194"/>
-            <path class="move-head" d="M468 194 l-10 -7 l1 11 z"/>
-            <text class="lbl" x="392" y="174" text-anchor="middle">${esc(mp.moved)}</text>
+            <path class="road" d="M70 590 C150 572 250 552 336 541"/>
+            <path class="road" d="M450 526 C470 526 485 527 500 527 C540 528 580 510 620 470 C660 420 690 330 715 255 C760 230 820 226 850 222 C920 180 980 130 1056 92"/>
+            <path class="road road-new" d="M60 604 C70 520 90 400 120 300 C150 240 230 222 330 214 C450 206 560 204 660 212 C740 218 800 224 850 222"/>
+            <g class="cut"><path d="M380 520 l28 26 M408 520 l-28 26"/></g>
+            <text class="lbl lbl-alert" x="394" y="646" text-anchor="middle">${esc(mp.cut)}</text>
+            <text class="lbl lbl-strong lbl-new" x="400" y="192" text-anchor="middle">${esc(mp.newRoad)}</text>
+            <g class="shops shops-faded">${[476, 500, 524, 548].map((x, n) => `<rect x="${x}" y="${n % 2 ? 504 : 498}" width="16" height="16" rx="3"/>`).join("")}</g>
+            <text class="lbl lbl-alert" x="586" y="600" text-anchor="middle">${esc(mp.shops)}</text>
+            <path class="move" d="M372 488 C400 360 500 230 584 172"/>
+            <path class="move-head" d="M584 172 l-18 4 l9 14 z"/>
+            <text class="lbl" x="472" y="312" text-anchor="middle">${esc(mp.moved)}</text>
           </g>
 
-          <text class="lbl" x="10" y="270">${esc(mp.west)}</text>
-          <text class="lbl" x="630" y="256" text-anchor="end">${esc(mp.east)}</text>
+          <text class="lbl lbl-water" x="524" y="440" text-anchor="middle">Karagan Lewaya</text>
+          <text class="lbl lbl-strong" x="560" y="540" text-anchor="middle">${esc(mp.town)}</text>
+          <text class="lbl" x="16" y="636">${esc(mp.west)}</text>
+          <text class="lbl" x="1040" y="78" text-anchor="end">${esc(mp.east)}</text>
+          <g class="compass" transform="translate(52 96)"><path d="M0 -26 L9 6 L0 0 L-9 6 Z"/><text x="0" y="30" text-anchor="middle">N</text></g>
         </svg>
-        <figcaption class="fine muted">${esc(g.mapNote)}</figcaption>
+        </div>
+        <figcaption class="fine muted">${esc(g.mapNote)}<span class="mobile-only"> ${lang === "no" ? "Sveip sideveis for å se hele illustrasjonen." : "Swipe sideways to see the whole illustration."}</span></figcaption>
       </figure>
       <div class="two-cards">
         <div class="mini-card reveal"><p class="small-label">${esc(g.directTitle)}</p><p>${esc(g.direct)}</p></div>
@@ -1040,8 +1050,10 @@
       ${S.contactBand(t)}`,
 
       mount(app) {
-        // Før/etter
+        // Før/etter. På smale skjermer starter illustrasjonen midt på, ved havna og gamlebyen.
         const svg = app.querySelector("#hmap");
+        const scroller = app.querySelector(".hmap-scroll");
+        if (scroller.scrollWidth > scroller.clientWidth) scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) * 0.5;
         app.querySelectorAll("[data-state]").forEach((b) => {
           if (b.tagName !== "BUTTON") return;
           b.addEventListener("click", () => {

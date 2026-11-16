@@ -817,23 +817,33 @@ input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
 .stat-grid-tight { margin: 28px 0 18px; }
 
 .hmap { margin: 0; display: grid; gap: 14px; }
-.hmap svg { width: 100%; height: auto; max-height: 520px; border-radius: var(--radius); border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--raised); }
-.hmap .land { fill: var(--raised); }
-.hmap .sea { fill: color-mix(in srgb, var(--zc-SE) 22%, var(--raised)); }
-.hmap .town { fill: color-mix(in srgb, var(--accent) 14%, var(--raised)); stroke: color-mix(in srgb, var(--accent) 40%, transparent); }
-.hmap .siri { fill: color-mix(in srgb, var(--zc-FI) 16%, var(--raised)); stroke: color-mix(in srgb, var(--zc-FI) 45%, transparent); }
-.hmap .road { fill: none; stroke: var(--ink); stroke-width: 6; stroke-linecap: round; opacity: 0.75; }
-.hmap .road-new { stroke: var(--accent); stroke-dasharray: 1 0; opacity: 1; }
-.hmap .cut path { stroke: var(--zc-DK); stroke-width: 4; stroke-linecap: round; }
+.hmap-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.hmap svg { display: block; width: 100%; height: auto; background: var(--raised); }
+.hmap .land { fill: color-mix(in srgb, var(--accent) 5%, var(--raised)); }
+.hmap .sea { fill: color-mix(in srgb, var(--zc-SE) 32%, var(--raised)); }
+.hmap .lagoon { fill: color-mix(in srgb, var(--zc-SE) 44%, var(--raised)); }
+.hmap .pans rect { fill: color-mix(in srgb, var(--zc-NO) 14%, var(--raised)); stroke: color-mix(in srgb, var(--zc-NO) 25%, transparent); }
+.hmap .town { fill: color-mix(in srgb, var(--accent) 16%, var(--raised)); stroke: color-mix(in srgb, var(--accent) 40%, transparent); stroke-width: 2; }
+.hmap .siri { fill: color-mix(in srgb, var(--zc-FI) 16%, var(--raised)); stroke: color-mix(in srgb, var(--zc-FI) 45%, transparent); stroke-width: 2; }
+.hmap .terminal { fill: color-mix(in srgb, var(--faint) 22%, var(--raised)); stroke: var(--faint); stroke-width: 1.5; }
+.hmap .quays rect { fill: color-mix(in srgb, var(--faint) 22%, var(--raised)); stroke: var(--faint); stroke-width: 1.5; }
+.hmap .pier { stroke: var(--faint); stroke-width: 6; stroke-linecap: round; }
+.hmap .road { fill: none; stroke: var(--ink); stroke-width: 9; stroke-linecap: round; opacity: 0.72; }
+.hmap .road-new { stroke: var(--accent); opacity: 1; }
+.hmap .cut path { stroke: var(--zc-DK); stroke-width: 7; stroke-linecap: round; }
 .hmap .houses rect { fill: var(--muted); }
 .hmap .shops rect { fill: var(--accent); }
 .hmap .shops-faded rect { fill: var(--faint); opacity: 0.45; }
-.hmap .move { fill: none; stroke: var(--zc-FI); stroke-width: 2; stroke-dasharray: 5 5; }
+.hmap .move { fill: none; stroke: var(--zc-FI); stroke-width: 3; stroke-dasharray: 9 9; }
 .hmap .move-head { fill: var(--zc-FI); }
-.hmap .lbl { font-family: var(--sans); font-size: 12px; fill: var(--muted); paint-order: stroke; stroke: var(--raised); stroke-width: 4px; stroke-linejoin: round; }
+.hmap .compass path { fill: var(--ink); }
+.hmap .compass text { font-family: var(--sans); font-size: 18px; font-weight: 700; fill: var(--ink); }
+.hmap .lbl { font-family: var(--sans); font-size: 19px; fill: var(--muted); paint-order: stroke; stroke: var(--raised); stroke-width: 6px; stroke-linejoin: round; }
 .hmap .lbl-strong { fill: var(--ink); font-weight: 600; }
+.hmap .lbl-new { fill: var(--accent); }
 .hmap .lbl-alert { fill: var(--zc-DK); font-weight: 600; }
-.hmap .lbl-sea { fill: color-mix(in srgb, var(--zc-SE) 80%, var(--ink)); stroke: none; font-style: italic; }
+.hmap .lbl-sea, .hmap .lbl-water { fill: color-mix(in srgb, var(--zc-SE) 75%, var(--ink)); stroke: none; font-style: italic; }
+.hmap .lbl-water { font-size: 16px; }
 .hmap .m-before, .hmap .m-after { transition: opacity 0.45s ease; }
 .hmap svg[data-state="before"] .m-after, .hmap svg[data-state="after"] .m-before { opacity: 0; pointer-events: none; }
 .two-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
@@ -916,5 +926,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
   .irr-btn { padding: 10px; }
   .irr-name { font-size: 15px; }
   .tl-track { grid-template-columns: repeat(9, 64px); }
-  .hmap .lbl { font-size: 14px; }
+  .hmap-scroll svg { min-width: 680px; }
 }
+.mobile-only { display: none; }
+@media (max-width: 640px) { .mobile-only { display: inline; } }

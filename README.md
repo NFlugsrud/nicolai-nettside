@@ -16,6 +16,7 @@ Dobbeltklikk på `start.command`. Siden åpnes på http://localhost:8001. Stopp 
 | `/oppgaver/` | Oversikt over oppgavene |
 | `/master/` | Masteroppgaven med kart, sikringskalkulator og korrelasjonsgraf |
 | `/oppgaver/okonomi/` | Bacheloroppgaven i økonomi: 4/3-regelen, døgnprofil, spill, varmekart, 2025-test og helligdager |
+| `/oppgaver/global-utvikling/` | Bacheloroppgaven i global utvikling: før/etter-illustrasjon, IRR-modellen, tidslinje og gjeldsfelle-debatten |
 | `/na/` | Nå-side |
 | `/bokhylle/` | Bøker og forfattere |
 | `/blogg/` | Blogg (vises i menyen når det finnes et publisert innlegg) |
@@ -29,6 +30,7 @@ All tekst ligger i `js/data.js`, én gang på norsk (`no`) og én gang på engel
 - **Bokhylle:** legg til bøker i `books` øverst i filen.
 - **Giverkalkulator:** tallene ligger i `give` øverst i filen, med kilder.
 - **Bacheloroppgaven i økonomi:** tallene fra oppgaven ligger i `econ` øverst i filen, tekstene i `econPage`.
+- **Bacheloroppgaven i global utvikling:** tidslinje og IRR-funn ligger i `gdev` øverst i filen, tekstene i `gdevPage`.
 - **Profilbilde:** `bilder/profil.jpg`.
 - **LinkedIn:** lim inn lenken i feltet `linkedin` øverst i `js/data.js`.
 

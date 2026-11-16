@@ -498,6 +498,9 @@
           return `<span class="${v > med ? "hi" : "lo"}" style="height:${Math.round(((v - 40) / 32) * 100)}%"></span>`;
         })
         .join("")}</div>`,
+      global: `<div class="mini-irr" aria-hidden="true">${SITE.gdev.irr
+        .map((r) => `<span class="lvl-${r.level}">${esc(r[S.lang][0])}</span>`)
+        .join("")}</div>`,
     };
     return {
       title: o.kicker,
@@ -891,6 +894,196 @@
         });
         drawHeat();
         showDetail("2022", 11);
+      },
+    };
+  };
+
+  // ================= Bacheloroppgave i global utvikling =================
+  P.globalutvikling = (t, S) => {
+    const { esc, icon, lang } = S;
+    const g = t.gdevPage;
+    const D = SITE.gdev;
+    const mp = g.map;
+
+    const map = `
+      <figure class="hmap reveal">
+        <div class="seg" role="group" aria-label="${esc(g.mapTitle)}">
+          <button type="button" data-state="before" aria-pressed="true">${esc(g.before)}</button>
+          <button type="button" data-state="after" aria-pressed="false">${esc(g.after)}</button>
+        </div>
+        <svg viewBox="0 118 640 262" id="hmap" data-state="before" role="img" aria-label="${esc(g.mapTitle)}">
+          <rect class="land" x="0" y="100" width="640" height="280"/>
+          <path class="sea" d="M0 305 C 140 295 260 312 380 300 C 480 292 560 296 640 288 L640 380 L0 380 Z"/>
+          <ellipse class="sea m-before" cx="272" cy="302" rx="34" ry="12"/>
+          <path class="sea m-after" d="M196 212 h152 a14 14 0 0 1 14 14 v34 a14 14 0 0 1 -14 14 h-52 v34 h-52 v-34 h-48 a14 14 0 0 1 -14 -14 v-34 a14 14 0 0 1 14 -14 z"/>
+          <text class="lbl lbl-sea" x="330" y="352" text-anchor="middle">${esc(mp.sea)}</text>
+          <text class="lbl m-after" x="272" y="246" text-anchor="middle">${esc(mp.inner)}</text>
+          <text class="lbl m-before" x="272" y="330" text-anchor="middle">${esc(mp.harbour)}</text>
+
+          <circle class="town" cx="440" cy="262" r="34"/>
+          <text class="lbl lbl-strong" x="440" y="222" text-anchor="middle">${esc(mp.town)}</text>
+
+          <g class="m-before">
+            <path class="road" d="M0 284 C 120 280 200 286 240 285 L 310 285 C 370 284 420 278 640 270"/>
+            <g class="houses">${[230, 246, 262, 282, 298, 314].map((x, n) => `<rect x="${x}" y="${n % 2 ? 262 : 268}" width="9" height="9" rx="2"/>`).join("")}</g>
+            <g class="shops">${[412, 428, 444, 460].map((x) => `<rect x="${x}" y="268" width="10" height="10" rx="2"/>`).join("")}</g>
+            <text class="lbl" x="130" y="304" text-anchor="middle">${esc(mp.oldRoad)}</text>
+          </g>
+
+          <g class="m-after">
+            <path class="road" d="M0 284 C 120 280 180 286 226 285"/>
+            <path class="road" d="M318 285 C 370 284 420 278 640 270"/>
+            <path class="road road-new" d="M0 284 C 70 276 110 178 220 166 S 520 132 566 196 S 620 262 640 270"/>
+            <g class="cut"><path d="M262 278 l20 14 M282 278 l-20 14"/></g>
+            <text class="lbl lbl-alert" x="200" y="322" text-anchor="end">${esc(mp.cut)}</text>
+            <text class="lbl lbl-strong" x="300" y="140" text-anchor="middle">${esc(mp.newRoad)}</text>
+            <g class="shops shops-faded">${[412, 428, 444, 460].map((x) => `<rect x="${x}" y="268" width="10" height="10" rx="2"/>`).join("")}</g>
+            <text class="lbl lbl-alert" x="440" y="322" text-anchor="middle">${esc(mp.shops)}</text>
+            <ellipse class="siri" cx="512" cy="200" rx="40" ry="20"/>
+            <text class="lbl lbl-strong" x="512" y="204" text-anchor="middle">${esc(mp.siri)}</text>
+            <path class="move" d="M330 210 C 380 176 424 180 468 194"/>
+            <path class="move-head" d="M468 194 l-10 -7 l1 11 z"/>
+            <text class="lbl" x="392" y="174" text-anchor="middle">${esc(mp.moved)}</text>
+          </g>
+
+          <text class="lbl" x="10" y="270">${esc(mp.west)}</text>
+          <text class="lbl" x="630" y="256" text-anchor="end">${esc(mp.east)}</text>
+        </svg>
+        <figcaption class="fine muted">${esc(g.mapNote)}</figcaption>
+      </figure>
+      <div class="two-cards">
+        <div class="mini-card reveal"><p class="small-label">${esc(g.directTitle)}</p><p>${esc(g.direct)}</p></div>
+        <div class="mini-card reveal is-alert"><p class="small-label">${esc(g.indirectTitle)}</p><p>${esc(g.indirect)}</p></div>
+      </div>`;
+
+    const irr = `
+      <div class="irr reveal">
+        <div class="irr-grid" role="group" aria-label="${esc(g.irrTitle)}">${D.irr
+          .map(
+            (r, n) => `<button type="button" class="irr-btn lvl-${r.level}" data-irr="${n}" aria-pressed="false">
+              <span class="irr-no">${n + 1}</span>
+              <span class="irr-name">${esc(r[lang][0])}</span>
+              <span class="irr-level">${esc(g.levels[r.level])}</span>
+            </button>`
+          )
+          .join("")}</div>
+        <div class="irr-detail" id="irr-detail" aria-live="polite"></div>
+      </div>
+      <p class="fine muted reveal">${esc(g.quoteNote)}</p>`;
+
+    const timeline = `
+      <div class="tl reveal">
+        <div class="tl-track" role="group" aria-label="${esc(g.timelineTitle)}">${D.timeline
+          .map((ev, n) => `<button type="button" class="tl-dot" data-ev="${n}" aria-pressed="false"><span>${esc(ev.year)}</span></button>`)
+          .join("")}</div>
+        <div class="tl-card" id="tl-card" aria-live="polite"></div>
+        <div class="tl-nav">
+          <button type="button" class="icon-btn" data-step="-1" aria-label="${lang === "no" ? "Forrige" : "Previous"}">${icon("left")}</button>
+          <button type="button" class="icon-btn" data-step="1" aria-label="${lang === "no" ? "Neste" : "Next"}">${icon("right")}</button>
+        </div>
+      </div>`;
+
+    const china = `
+      <div class="views reveal">
+        <div class="views-bar" aria-hidden="true"><span>${esc(g.views[0][0])}</span><span>${esc(g.views[2][0])}</span></div>
+        <div class="views-grid">${g.views
+          .map((v) => `<div class="view-card"><h3>${esc(v[0])}</h3><p>${esc(v[1])}</p><p class="view-src">${esc(v[2])}</p></div>`)
+          .join("")}</div>
+      </div>
+      <div class="panel reveal"><p class="small-label">${esc(g.local)}</p><p class="prose">${esc(g.localText)}</p></div>`;
+
+    return {
+      title: lang === "no" ? "Bacheloroppgave i global utvikling" : "Bachelor's thesis in global development",
+      html: `
+      ${S.pageHead(
+        g.kicker,
+        g.title,
+        g.lead,
+        `<div class="page-actions"><a class="text-link back-link" href="/oppgaver/">${icon("left", "icon icon-sm")} ${esc(t.thesesPage.back)}</a></div>
+         <dl class="facts facts-head">${g.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>`
+      )}
+
+      ${S.block(
+        g.questionTitle,
+        "",
+        `<blockquote class="big-question reveal">${esc(g.question)}</blockquote>
+         <p class="fine muted reveal">${esc(g.questionNote)}</p>
+         <div class="stat-grid stat-grid-tight">${g.numbers.map(([n, txt]) => `<div class="stat reveal"><strong>${esc(n)}</strong><span>${esc(txt)}</span></div>`).join("")}</div>
+         <p class="fine muted reveal">${esc(g.fullTitle)}</p>`
+      )}
+
+      ${S.block(g.mapTitle, g.mapText, map, "veien")}
+      ${S.block(g.irrTitle, g.irrText, irr, "irr")}
+
+      ${S.block(
+        g.voiceTitle,
+        g.voiceText,
+        `<figure class="pull reveal"><blockquote>${esc(g.voiceQuote)}</blockquote><figcaption>${esc(g.interview(12))}</figcaption></figure>`
+      )}
+
+      ${S.block(g.timelineTitle, g.timelineText, timeline, "tidslinje")}
+      ${S.block(g.chinaTitle, g.chinaText, china)}
+
+      ${S.block(
+        g.lessonsTitle,
+        g.lessonsText,
+        `<ol class="lessons">${g.lessons.map((l, n) => `<li class="reveal"><span>${n + 1}</span><p>${esc(l)}</p></li>`).join("")}</ol>`
+      )}
+
+      ${S.block(
+        g.reflectTitle,
+        "",
+        `<div class="panel reveal"><p class="prose">${esc(g.reflect)}</p></div>
+         <a class="text-link reveal" href="/oppgaver/">${icon("left", "icon icon-sm")} ${esc(t.thesesPage.back)}</a>`
+      )}
+
+      ${S.contactBand(t)}`,
+
+      mount(app) {
+        // Før/etter
+        const svg = app.querySelector("#hmap");
+        app.querySelectorAll("[data-state]").forEach((b) => {
+          if (b.tagName !== "BUTTON") return;
+          b.addEventListener("click", () => {
+            svg.dataset.state = b.dataset.state;
+            app.querySelectorAll("button[data-state]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+          });
+        });
+
+        // IRR-modellen
+        const detail = app.querySelector("#irr-detail");
+        const showIrr = (n) => {
+          const r = D.irr[n];
+          const [name, def, finding] = r[lang];
+          app.querySelectorAll("[data-irr]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.irr) === n)));
+          detail.innerHTML = `
+            <p class="irr-tag lvl-${r.level}">${esc(g.levels[r.level])}</p>
+            <h3>${n + 1}. ${esc(name)}</h3>
+            <p class="irr-def">${esc(def)}</p>
+            <p class="small-label">${esc(g.finding)}</p>
+            <p>${esc(finding)}</p>
+            <figure class="irr-quote"><blockquote>“${esc(r.quote)}”</blockquote><figcaption>${esc(g.interview(r.source))}</figcaption></figure>`;
+        };
+        app.querySelectorAll("[data-irr]").forEach((b) => b.addEventListener("click", () => showIrr(Number(b.dataset.irr))));
+        showIrr(1);
+
+        // Tidslinje
+        let cur = 0;
+        const card = app.querySelector("#tl-card");
+        const showEv = (n) => {
+          cur = Math.max(0, Math.min(D.timeline.length - 1, n));
+          const ev = D.timeline[cur];
+          app.querySelectorAll("[data-ev]").forEach((b, i) => {
+            b.setAttribute("aria-pressed", String(i === cur));
+            b.classList.toggle("is-past", i < cur);
+          });
+          card.innerHTML = `<p class="tl-year">${esc(ev.year)}</p><h3>${esc(ev[lang][0])}</h3><p>${esc(ev[lang][1])}</p>`;
+          app.querySelector('[data-step="-1"]').disabled = cur === 0;
+          app.querySelector('[data-step="1"]').disabled = cur === D.timeline.length - 1;
+        };
+        app.querySelectorAll("[data-ev]").forEach((b) => b.addEventListener("click", () => showEv(Number(b.dataset.ev))));
+        app.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", () => showEv(cur + Number(b.dataset.step))));
+        showEv(0);
       },
     };
   };

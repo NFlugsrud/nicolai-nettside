@@ -13,6 +13,7 @@ All tekst ligger i `js/data.js`, én gang på norsk (`no`) og én gang på engel
 - **Profilbilde:** legg bildet i `bilder/profil.jpg`. Uten bilde vises initialene.
 - **LinkedIn:** lim inn lenken i feltet `linkedin` øverst i `js/data.js`.
 - **Skriving:** legg til innlegg i `writing.posts`. Seksjonen vises når listen har innhold.
+- **CV (PDF):** lages fra `cv.html` med innholdet i `js/data.js`. Dobbeltklikk `lag-cv.command` etter endringer, så oppdateres `cv/`.
 
 ## Lagre endringer til GitHub
 

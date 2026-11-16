@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CV – Nicolai F. Dahl</title>
+  <!-- Utskriftsversjon av CV-en. Lag PDF med lag-cv.command. Innholdet hentes fra js/data.js. -->
+  <style>
+    @page { size: A4; margin: 16mm 17mm; }
+    * { box-sizing: border-box; }
+    html { background: #e9e6df; }
+    body {
+      margin: 24px auto; width: 210mm; min-height: 297mm; padding: 16mm 17mm;
+      background: #fff; color: #1b1c1a;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      font-size: 9.6pt; line-height: 1.45;
+    }
+    @media print { html { background: #fff; } body { margin: 0; width: auto; min-height: 0; padding: 0; } }
+    h1, h2, h3, p, ul { margin: 0; padding: 0; }
+    ul { list-style: none; }
+    a { color: inherit; text-decoration: none; }
+    header { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding-bottom: 12px; border-bottom: 1.5px solid #1b1c1a; }
+    h1 { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-weight: 400; font-size: 26pt; line-height: 1; letter-spacing: -0.01em; }
+    .lead { margin-top: 6px; color: #5e605a; max-width: 115mm; }
+    .contact { text-align: right; color: #5e605a; font-size: 9pt; line-height: 1.6; white-space: nowrap; }
+    h2 { margin: 16px 0 6px; font-size: 8.5pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1f5a47; }
+    .item { display: grid; grid-template-columns: 44mm 1fr; gap: 10px; padding: 6px 0; border-top: 0.5px solid #e1ddd2; break-inside: avoid; }
+    h2 + .item { border-top: 0; }
+    .period { color: #5e605a; font-size: 8.8pt; font-variant-numeric: tabular-nums; }
+    h3 { font-size: 10pt; font-weight: 650; }
+    .org { color: #1f5a47; }
+    .item p:not(.period) { color: #3d3f3a; margin-top: 2px; }
+    .skills { display: grid; grid-template-columns: 44mm 1fr; gap: 4px 10px; }
+    .skills dt { color: #5e605a; }
+    .skills dd { margin: 0; }
+  </style>
+</head>
+<body>
+  <div id="cv"></div>
+  <script src="js/data.js"></script>
+  <script>
+    (function () {
+      const lang = new URLSearchParams(location.search).get("lang") === "en" ? "en" : "no";
+      const t = SITE[lang];
+      document.documentElement.lang = lang === "no" ? "nb" : "en";
+      const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+      const items = (list) => list.map((i) => `<div class="item">
+          <p class="period">${esc(i.period)}</p>
+          <div>
+            <h3>${esc(i.role)}</h3>
+            <p class="org">${esc(i.org)}, ${esc(i.place)}</p>
+            ${i.points.map((p) => `<p>${esc(p)}</p>`).join("")}
+          </div>
+        </div>`).join("");
+      document.getElementById("cv").innerHTML = `
+        <header>
+          <div>
+            <h1>${esc(SITE.name)}</h1>
+            <p class="lead">${esc(t.hero.lead)}</p>
+          </div>
+          <div class="contact">
+            ${esc(t.hero.kicker)}<br>
+            <a href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a><br>
+            <a href="https://${esc(SITE.website)}">${esc(SITE.website)}</a>
+            ${SITE.linkedin ? `<br><a href="${esc(SITE.linkedin)}">${esc(SITE.linkedin.replace(/^https?:\/\/(www\.)?/, ""))}</a>` : ""}
+          </div>
+        </header>
+        <h2>${esc(t.cvPage.education)}</h2>
+        ${items(t.education.items)}
+        <h2>${esc(t.cvPage.experience)}</h2>
+        ${items(t.experience.items)}
+        <h2>${esc(t.cvPage.skills)}</h2>
+        <dl class="skills">${t.skills.groups.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v.join(", "))}</dd>`).join("")}</dl>`;
+      document.title = `CV – ${SITE.name}`;
+    })();
+  </script>
+</body>
+</html>

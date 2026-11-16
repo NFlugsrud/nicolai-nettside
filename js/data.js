@@ -10,6 +10,33 @@ const SITE = {
   email: "nicolaidahl00@gmail.com",
   linkedin: "", // Lim inn hele LinkedIn-lenken her. Tom = vises ikke.
   photo: "bilder/profil.jpg", // Legg bildet i mappen bilder/ med dette navnet.
+  website: "nicolaif.no",
+
+  // PDF-CV-ene lages fra cv.html med lag-cv.command. Kjør den på nytt etter endringer.
+  cv: { no: "cv/Nicolai-F-Dahl-CV.pdf", en: "cv/Nicolai-F-Dahl-CV-EN.pdf" },
+
+  // Hvor mange oppføringer som vises før «Vis flere» i erfaring og utdanning.
+  visibleEntries: 4,
+
+  // Forkortelser i merkene ved siden av hver arbeidsgiver og skole.
+  badges: {
+    "Stiftelsen Gi Effektivt": "GE",
+    "Drøbak Montessori Stiftelse": "DM",
+    "Drøbak Montessori Foundation": "DM",
+    "Drøbak Montessori Skole": "DM",
+    "Drøbak Montessori School": "DM",
+    "Aider AS": "Ai",
+    "Economic Development Partnership (EDP)": "EDP",
+    "Handelshøyskolen ved Universitetet i Agder": "UiA",
+    "School of Business and Law, University of Agder": "UiA",
+    "Universitetet i Agder": "UiA",
+    "University of Agder": "UiA",
+    "Graduate School of Business, University of Cape Town": "GSB",
+    "Universitetet i Oslo": "UiO",
+    "University of Oslo": "UiO",
+    "University of Ruhuna": "UoR",
+    "Harvard Business School Online": "HBS",
+  },
 
   no: {
     nav: {
@@ -25,6 +52,11 @@ const SITE = {
     hero: {
       kicker: "Oslo, Norge",
       lead: "Jeg jobber med økonomi og drift i Stiftelsen Gi Effektivt, og fullfører en master i analytisk finans ved Handelshøyskolen ved Universitetet i Agder.",
+      facts: [
+        ["Nå", "Stiftelsen Gi Effektivt"],
+        ["Utdanning", "Siviløkonom, UiA"],
+        ["Basert i", "Oslo"],
+      ],
     },
     about: {
       title: "Om meg",
@@ -251,12 +283,27 @@ const SITE = {
     },
     contact: {
       title: "Kontakt",
-      text: "Ta gjerne kontakt på e-post.",
+      text: "Send meg en e-post, så svarer jeg så raskt jeg kan.",
       emailLabel: "E-post",
       linkedinLabel: "LinkedIn",
     },
     footer: "Sist oppdatert november 2026",
-    ui: { theme: "Bytt mellom lyst og mørkt", lang: "Språk" },
+    ui: {
+      theme: "Bytt mellom lyst og mørkt",
+      lang: "Språk",
+      contactBtn: "Kontakt meg",
+      cvBtn: "Last ned CV",
+      now: "Nå",
+      showMore: (n) => `Vis ${n} til`,
+      showLess: "Vis færre",
+      contactHeading: "Ta gjerne kontakt",
+      toTop: "Til toppen",
+    },
+    cvPage: {
+      education: "Utdanning",
+      experience: "Erfaring",
+      skills: "Verktøy",
+    },
   },
 
   en: {
@@ -273,6 +320,11 @@ const SITE = {
     hero: {
       kicker: "Oslo, Norway",
       lead: "I work in finance and operations at Gi Effektivt, Norway's effective giving foundation, and I am completing an MSc in analytical finance at the University of Agder.",
+      facts: [
+        ["Now", "Gi Effektivt"],
+        ["Education", "MSc, University of Agder"],
+        ["Based in", "Oslo"],
+      ],
     },
     about: {
       title: "About",
@@ -497,11 +549,26 @@ const SITE = {
     },
     contact: {
       title: "Contact",
-      text: "Feel free to get in touch by email.",
+      text: "Send me an email and I will get back to you as soon as I can.",
       emailLabel: "Email",
       linkedinLabel: "LinkedIn",
     },
     footer: "Last updated November 2026",
-    ui: { theme: "Switch between light and dark", lang: "Language" },
+    ui: {
+      theme: "Switch between light and dark",
+      lang: "Language",
+      contactBtn: "Get in touch",
+      cvBtn: "Download CV",
+      now: "Now",
+      showMore: (n) => `Show ${n} more`,
+      showLess: "Show fewer",
+      contactHeading: "Get in touch",
+      toTop: "Back to top",
+    },
+    cvPage: {
+      education: "Education",
+      experience: "Experience",
+      skills: "Tools",
+    },
   },
 };

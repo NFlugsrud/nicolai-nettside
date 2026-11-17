@@ -463,7 +463,7 @@ const SITE = {
       blocks: [
         {
           title: "Løping",
-          text: "Jeg løper rundt 50 kilometer i uken, og sykler når anledningen byr seg. Løpingen gir struktur i uken og tid til å tenke.",
+          text: "Jeg liker å løpe, og sykler når anledningen byr seg. Løpingen gir struktur i uken og tid til å tenke.",
         },
         {
           title: "Lesing",
@@ -592,7 +592,7 @@ const SITE = {
         { icon: "work", title: "Jobb", text: "Jobber med økonomi og drift i Stiftelsen Gi Effektivt: regnskap, lønn, rapportering og tildelinger til de anbefalte organisasjonene." },
         { icon: "school", title: "Masteroppgaven", text: "Fullfører masteroppgaven om korrelasjoner mellom nordiske prisområder og prisingen av EPAD-kontrakter. Den leveres 1. desember." },
         { icon: "home", title: "Bosted", text: "Bor i Oslo, etter flere år i Kristiansand." },
-        { icon: "run", title: "Trening", text: "Løper rundt 50 kilometer i uken." },
+        { icon: "run", title: "Trening", text: "Løper jevnlig og liker det godt." },
         { icon: "eye", title: "Følger med på", text: "GiveWell, Our World in Data og EA Forum." },
       ],
       about: "Dette er en nå-side, en idé fra Derek Sivers. Den viser hva jeg er opptatt av akkurat nå, ikke hele historien.",
@@ -1046,7 +1046,7 @@ const SITE = {
       blocks: [
         {
           title: "Running",
-          text: "I run about 50 kilometres a week, and cycle when I get the chance. Running gives the week structure and time to think.",
+          text: "I enjoy running, and cycle when I get the chance. Running gives the week structure and time to think.",
         },
         {
           title: "Reading",
@@ -1175,7 +1175,7 @@ const SITE = {
         { icon: "work", title: "Work", text: "Working in finance and operations at Gi Effektivt: bookkeeping, payroll, reporting and disbursements to the recommended organisations." },
         { icon: "school", title: "Master's thesis", text: "Finishing my thesis on correlations between Nordic price areas and the pricing of EPAD contracts. It is due on 1 December." },
         { icon: "home", title: "Home", text: "Living in Oslo, after several years in Kristiansand." },
-        { icon: "run", title: "Training", text: "Running about 50 kilometres a week." },
+        { icon: "run", title: "Training", text: "Running regularly and enjoying it." },
         { icon: "eye", title: "Following", text: "GiveWell, Our World in Data and the EA Forum." },
       ],
       about: "This is a now page, an idea from Derek Sivers. It shows what I am focused on right now, not the whole story.",
